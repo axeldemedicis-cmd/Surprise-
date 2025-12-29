@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonne Année 2026 - Laurel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* L'Amazone du Bénin en fond */
+        .bg-amazone {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://www.gouv.bj/upload/images/articles/ckeditor/52070149113_4408813890_o.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            filter: saturate(1.2);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 3px solid #ffd700;
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            width: 85%; max-width: 450px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: bounceIn 1.5s ease;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem; color: #fff;
+            margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .year {
+            font-size: 5rem; font-weight: 900; color: #ffd700;
+            display: block; margin: -10px 0;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            -webkit-text-stroke: 1px #fff;
+        }
+
+        .message {
+            color: #fff; font-size: 1.1rem; line-height: 1.4;
+            margin: 20px 0; font-weight: 500;
+        }
+
+        input {
+            width: 80%; padding: 12px; border-radius: 25px;
+            border: none; margin-bottom: 15px; outline: none;
+            font-size: 1rem; text-align: center;
+        }
+
+        button {
+            background: linear-gradient(45deg, #d4af37, #f9d423);
+            border: none; padding: 12px 25px; border-radius: 25px;
+            color: #000; font-weight: 900; cursor: pointer;
+            font-size: 1.1rem; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button:hover { transform: scale(1.1); background: #fff; }
+
+        .signature {
+            margin-top: 25px; font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem; color: #ffd700;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Feux d'artifice simplifiés en CSS */
+        .sparkle {
+            position: absolute; width: 5px; height: 5px;
+            background: white; border-radius: 50%;
+            animation: firework 3s infinite;
+        }
+
+        @keyframes firework {
+            0% { transform: translateY(100vh); opacity: 1; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(15); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-amazone"></div>
+
+    <div class="container">
+        <h1>Bonne Année</h1>
+        <span class="year">2026</span>
+        
+        <p class="message">Que cette année soit pétillante comme du champagne et forte comme l'Amazone ! 🥂✨</p>
+
+        <input type="text" id="guestName" placeholder="Ton prénom ici...">
+        <br>
+        <button onclick="celebrate()">OUVRIR LE CHAMPAGNE 🍾</button>
+
+        <div id="personal-msg"></div>
+
+        <div class="signature">De la part de Laurel</div>
+    </div>
+
+    <script>
+        function celebrate() {
+            const name = document.getElementById('guestName').value;
+            
+            // Explosion de paillettes dorées et feux d'artifice
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 50 * (timeLeft / duration);
+              // Paillettes dorées
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#ffd700', '#ffffff', '#ffcf4b'] }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#ffd700', '#ffffff', '#ffcf4b'] }));
+            }, 250);
+
+            if(name) {
+                document.getElementById('personal-msg').innerHTML = `<h2 style="color:white; font-family:'Dancing Script'; margin-top:20px;">Santé à toi, ${name} ! 🥂</h2>`;
+            }
+        }
+    </script>
+</body>
+</html>
